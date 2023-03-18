@@ -13,7 +13,7 @@ import { Footer } from './Components/Footer';
 function App() {
   return (
     <div className='App'>
-      <BrowserRouter basename='/'>
+      <BrowserRouter basename='/nft-market/'>
         <NavBar />
         <Routes>
           <Route path='/' element={<DefaultLayout />}>
