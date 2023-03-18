@@ -1,5 +1,4 @@
 import axiosHttp from './axios';
-import { request } from 'bitverse-jsbridge';
 
 interface requestOptionType {
   /**

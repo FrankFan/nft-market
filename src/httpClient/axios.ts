@@ -19,7 +19,7 @@ axiosHttp.interceptors.request.use(
     config.debug && console.log('request is ', config);
     return config;
   },
-  (error) => {
+  (error: any) => {
     return Promise.reject(error);
   }
 );
@@ -32,7 +32,7 @@ axiosHttp.interceptors.response.use(
     response.config.debug && console.log('response is ', response);
     return response;
   },
-  (error) => {
+  (error: any) => {
     return Promise.reject(error);
   }
 );
