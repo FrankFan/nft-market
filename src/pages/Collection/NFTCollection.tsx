@@ -1,17 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getNftByCollection } from '../api';
-import { NftCollectionItemType } from '../types';
+import { getNftByCollection } from '../../api';
+import { NftCollectionItemType } from '../../types';
 import { NFTCollectionItem } from './NFTCollectoinItem';
-
-// export interface NftCollectionType {
-//   token_id: string;
-//   contract_type: string;
-//   token_address: string;
-//   name: string;
-//   symbol: string;
-//   metadata: string;
-// }
+import './index.scss';
 
 export const NFTCollection = () => {
   const [list, setList] = useState<NftCollectionItemType[]>([]);

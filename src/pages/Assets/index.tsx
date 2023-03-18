@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-export const NFTDetail = () => {
+export const AssetsDetail = () => {
   const { address, tokenId } = useParams();
 
   return (

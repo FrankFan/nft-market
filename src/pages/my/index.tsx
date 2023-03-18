@@ -1,7 +1,9 @@
+import './index.scss';
+
 export const My = () => {
   return (
     <div className='my'>
-      <h1>my wallet</h1>
+      <h2>My Wallet: building</h2>
     </div>
   );
 };

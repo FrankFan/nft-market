@@ -1,6 +1,7 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { NftCollectionItemType } from '../types';
-import { convertIpfs2Http } from '../utils';
+import { NftCollectionItemType } from '../../types';
+import { convertIpfs2Http } from '../../utils';
 
 export const NFTCollectionItem = ({
   token_id,
@@ -14,7 +15,7 @@ export const NFTCollectionItem = ({
   return (
     <Link to={`/assets/${token_address}/${token_id}`}>
       <div className='nft-collection-item'>
-        <img src={imgUrl} alt='img' />
+        <img src={imgUrl} alt={token_id} />
         <p>
           <span>{name}</span> #<span>{token_id}</span>
         </p>

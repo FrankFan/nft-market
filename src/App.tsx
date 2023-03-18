@@ -1,13 +1,13 @@
-import { NFTCollection } from './Components/NFTCollection';
+import { NFTCollection } from './pages/Collection/NFTCollection';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import 'normalize.css';
 import './App.scss';
 import { NavBar } from './Components/Nav';
 import DefaultLayout from './layouts/DefaultLayout';
 import { Home } from './pages/Home';
-import { My } from './pages/my';
-import { Rankings } from './pages/Collection/Rankings';
-import { NFTDetail } from './Components/NFTDetail';
+import { My } from './pages/My';
+import { Rankings } from './pages/Rankings/Rankings';
+import { AssetsDetail } from './pages/Assets';
 
 function App() {
   return (
@@ -20,7 +20,10 @@ function App() {
             <Route path='/my' element={<My />} />
             <Route path='/rankings' element={<Rankings />} />
             <Route path='/collection/:address' element={<NFTCollection />} />
-            <Route path='/assets/:address/:tokenId' element={<NFTDetail />} />
+            <Route
+              path='/assets/:address/:tokenId'
+              element={<AssetsDetail />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

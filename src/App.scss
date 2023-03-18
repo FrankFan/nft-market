@@ -1,17 +1,40 @@
-.nft-collection {
-  &__content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    a:not(:last-child) {
-      margin-right: 24px;
-    }
-  }
-  &-item {
+.layout-default {
+  width: 70vw;
+  margin: 0 auto;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 20px 20px;
+  .logo {
     img {
-      width: 150px;
-      height: 150px;
-      border-radius: 8px;
+      width: 30px;
+      height: 30px;
+    }
+    margin-right: 20px;
+  }
+  ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+    li {
+      list-style: none;
+      &:not(:last-child) {
+        margin-right: 30px;
+      }
+      a {
+        text-decoration: none;
+        color: rgba(55, 65, 81, 1);
+        padding: 6px 10px;
+        border-radius: 6px;
+        &:hover {
+          background-color: rgba(243, 244, 246, 1);
+        }
+      }
     }
   }
 }

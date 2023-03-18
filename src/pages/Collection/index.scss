@@ -1,0 +1,28 @@
+.nft-collection {
+  width: 70vw;
+  margin: 0 auto;
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    a {
+      text-align: center;
+    }
+    a:not(:last-child) {
+      margin-right: 24px;
+    }
+  }
+  &-item {
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 8px;
+    }
+    p {
+      max-width: 180px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+}
