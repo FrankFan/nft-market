@@ -1,0 +1,17 @@
+.nft-collection {
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  &-item {
+    &:not(:last-child) {
+      margin-right: 24px;
+    }
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 8px;
+    }
+  }
+}
