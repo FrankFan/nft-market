@@ -2,8 +2,6 @@ import httpClient from '../httpClient/index';
 
 const VITE_MORALIS_API_KEY = import.meta.env.VITE_MORALIS_API_KEY;
 
-console.log(`VITE_MORALIS_API_KEY`, VITE_MORALIS_API_KEY);
-
 interface requestType {
   url: string;
   method: 'post' | 'get';

@@ -112,6 +112,11 @@
   resolved "https://npm.ffe390afd658c19dcbf707e0597b846d.de/@esbuild%2fwin32-x64/-/win32-x64-0.17.12.tgz#3a11d13e9a5b0c05db88991b234d8baba1f96487"
   integrity sha512-JOOxw49BVZx2/5tW3FqkdjSD/5gXYeVGPDcB0lvap0gLQshkh1Nyel1QazC+wNxus3xPlsYAgqU1BUmrmCvWtw==
 
+"@remix-run/router@1.4.0":
+  version "1.4.0"
+  resolved "https://npm.ffe390afd658c19dcbf707e0597b846d.de/@remix-run%2frouter/-/router-1.4.0.tgz#74935d538e4df8893e47831a7aea362f295bcd39"
+  integrity sha512-BJ9SxXux8zAg991UmT8slpwpsd31K1dHHbD3Ba4VzD+liLQ4WAMSxQp2d2ZPRPfN0jN2NPRowcSSoM7lCaF08Q==
+
 "@swc/core-darwin-arm64@1.3.41":
   version "1.3.41"
   resolved "https://npm.ffe390afd658c19dcbf707e0597b846d.de/@swc%2fcore-darwin-arm64/-/core-darwin-arm64-1.3.41.tgz#c8ec25fb3171e1e53546d0fbf4044c33d5ab42c5"
@@ -474,6 +479,21 @@ react-dom@^18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-router-dom@^6.9.0:
+  version "6.9.0"
+  resolved "https://npm.ffe390afd658c19dcbf707e0597b846d.de/react-router-dom/-/react-router-dom-6.9.0.tgz#dd8b4e461453bd4cad2e6404493d1a5b4bfea758"
+  integrity sha512-/seUAPY01VAuwkGyVBPCn1OXfVbaWGGu4QN9uj0kCPcTyNYgL1ldZpxZUpRU7BLheKQI4Twtl/OW2nHRF1u26Q==
+  dependencies:
+    "@remix-run/router" "1.4.0"
+    react-router "6.9.0"
+
+react-router@6.9.0:
+  version "6.9.0"
+  resolved "https://npm.ffe390afd658c19dcbf707e0597b846d.de/react-router/-/react-router-6.9.0.tgz#0f503d9becbc62d9e4ddc0f9bd4026e0fd29fbf5"
+  integrity sha512-51lKevGNUHrt6kLuX3e/ihrXoXCa9ixY/nVWRLlob4r/l0f45x3SzBvYJe3ctleLUQQ5fVa4RGgJOTH7D9Umhw==
+  dependencies:
+    "@remix-run/router" "1.4.0"
 
 react@^18.2.0:
   version "18.2.0"

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { getNftByCollection } from '../api';
 import { NFTCollectionItem } from './NFTCollectoinItem';
 
@@ -27,8 +28,14 @@ interface NftCollectionItemType {
   minter_address: string;
 }
 
+// interface IPros {
+//   address?: string;
+// }
+
 export const NFTCollection = () => {
   const [list, setList] = useState<NftCollectionType[]>([]);
+  const { address } = useParams();
+  console.log('address ---', address);
 
   useEffect(() => {
     console.log('useEffect');
@@ -36,7 +43,9 @@ export const NFTCollection = () => {
   }, []);
 
   const getNFTCollectionByContract = async () => {
-    const contractAddress = `0x79fcdef22feed20eddacbb2587640e45491b757f`;
+    if (!address) return [];
+    console.log(`-------- address = `, address);
+    const contractAddress = address;
     const chainId = 'eth';
     const limit = 100;
     const { result, page, page_size, total } = await getNftByCollection({
