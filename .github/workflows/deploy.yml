@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+env:
+  VITE_API_DOMAIN: ${{ secrets.VITE_API_DOMAIN }}
+  VITE_MORALIS_API_KEY: ${{ secrets.VITE_MORALIS_API_KEY }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
