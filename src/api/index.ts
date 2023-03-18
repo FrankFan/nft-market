@@ -1,6 +1,6 @@
 import { requestApi } from './requestApi';
 
-const debug = true;
+const debug = false;
 
 const API_DOMAIN = import.meta.env.VITE_API_DOMAIN;
 const baseURL = `${API_DOMAIN}`;

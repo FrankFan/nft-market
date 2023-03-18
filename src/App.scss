@@ -3,11 +3,11 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-  }
-  &-item {
-    &:not(:last-child) {
+    a:not(:last-child) {
       margin-right: 24px;
     }
+  }
+  &-item {
     img {
       width: 150px;
       height: 150px;

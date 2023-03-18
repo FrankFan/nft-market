@@ -1,16 +1,24 @@
-import { NftCollectionType } from './NFTCollection';
+import { Link } from 'react-router-dom';
+import { NftCollectionItemType } from '../types';
+import { convertIpfs2Http } from '../utils';
 
 export const NFTCollectionItem = ({
-  nftImg,
-  tokenId,
+  token_id,
   name,
-}: NftCollectionType) => {
+  token_address,
+  metadata,
+}: NftCollectionItemType) => {
+  const metadataObj = JSON.parse(metadata);
+  const imgUrl = convertIpfs2Http(metadataObj.image);
+
   return (
-    <div className='nft-collection-item'>
-      <img src={nftImg} alt='img' />
-      <p>
-        {name} #{tokenId}
-      </p>
-    </div>
+    <Link to={`/assets/${token_address}/${token_id}`}>
+      <div className='nft-collection-item'>
+        <img src={imgUrl} alt='img' />
+        <p>
+          <span>{name}</span> #<span>{token_id}</span>
+        </p>
+      </div>
+    </Link>
   );
 };

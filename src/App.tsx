@@ -7,6 +7,7 @@ import DefaultLayout from './layouts/DefaultLayout';
 import { Home } from './pages/Home';
 import { My } from './pages/my';
 import { Rankings } from './pages/Collection/Rankings';
+import { NFTDetail } from './Components/NFTDetail';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path='/my' element={<My />} />
             <Route path='/rankings' element={<Rankings />} />
             <Route path='/collection/:address' element={<NFTCollection />} />
+            <Route path='/assets/:address/:tokenId' element={<NFTDetail />} />
           </Route>
         </Routes>
       </BrowserRouter>
