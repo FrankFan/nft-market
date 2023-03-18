@@ -4,6 +4,7 @@ import { getNftByCollection } from '../../api';
 import { NftCollectionItemType } from '../../types';
 import { NFTCollectionItem } from './NFTCollectoinItem';
 import './index.scss';
+import { BackButton } from '../../Components/BackButton';
 
 export const NFTCollection = () => {
   const [list, setList] = useState<NftCollectionItemType[]>([]);
@@ -29,6 +30,7 @@ export const NFTCollection = () => {
 
   return (
     <div className='nft-collection'>
+      <BackButton />
       {list.length > 0 ? (
         <div className='nft-collection__info'>
           <h1>{list[0].name}</h1>

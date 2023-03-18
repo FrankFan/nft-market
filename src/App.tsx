@@ -8,6 +8,7 @@ import { Home } from './pages/Home';
 import { My } from './pages/My';
 import { Rankings } from './pages/Rankings/Rankings';
 import { AssetsDetail } from './pages/Assets';
+import { Footer } from './Components/Footer';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             />
           </Route>
         </Routes>
+        <Footer />
       </BrowserRouter>
     </div>
   );

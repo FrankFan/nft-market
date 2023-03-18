@@ -12,8 +12,8 @@ type NftCollectionType = {
 };
 
 export interface NftDetailType {
-  contractAddress: number;
-  tokenId: number;
+  contractAddress: string;
+  tokenId: string;
 }
 
 /**
@@ -38,7 +38,7 @@ export function getNftByCollection({
 /**
  * 获取nft详情数据
  */
-export function getRewardData({ contractAddress, tokenId }: NftDetailType) {
+export function getNFTDetaildData({ contractAddress, tokenId }: NftDetailType) {
   return requestApi({
     url: `${baseURL}/nft/${contractAddress}/${tokenId}`,
     method: 'get',

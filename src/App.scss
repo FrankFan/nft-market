@@ -1,6 +1,12 @@
 .layout-default {
   width: 70vw;
   margin: 0 auto;
+  padding-bottom: 30px;
+}
+
+.back-button {
+  font-size: 40px;
+  cursor: pointer;
 }
 
 .navbar {
@@ -37,4 +43,11 @@
       }
     }
   }
+}
+
+.footer {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
