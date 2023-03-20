@@ -9,6 +9,7 @@ import { My } from './pages/My';
 import { Rankings } from './pages/Rankings/Rankings';
 import { AssetsDetail } from './pages/Assets';
 import { Footer } from './Components/Footer';
+import { MyCollection } from './pages/MyCollection';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/' element={<DefaultLayout />}>
             <Route path='/' element={<Home />} />
             <Route path='/my' element={<My />} />
+            <Route path='/my/collection/:address' element={<MyCollection />} />
             <Route path='/rankings' element={<Rankings />} />
             <Route path='/collection/:address' element={<NFTCollection />} />
             <Route

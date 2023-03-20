@@ -45,3 +45,27 @@ export function getNFTDetaildData({ contractAddress, tokenId }: NftDetailType) {
     debug,
   });
 }
+
+/**
+ * 根据钱包地址获取所有的 Collection
+ * https://docs.moralis.io/web3-data-api/evm/reference/get-wallet-nft-collections
+ */
+export function getWalletNFTCollections(walletAddress: string) {
+  return requestApi({
+    url: `${baseURL}/${walletAddress}/nft/collections`,
+    method: 'get',
+    debug,
+  });
+}
+
+/**
+ * 根据钱包地址获取所有的 NFT
+ * https://docs.moralis.io/web3-data-api/evm/reference/get-wallet-nfts
+ */
+export function getNFTByWalletAddress(walletAddress: string) {
+  return requestApi({
+    url: `${baseURL}/${walletAddress}/nft`,
+    method: 'get',
+    debug,
+  });
+}

@@ -1,3 +1,43 @@
 .my {
-  color: rgb(71, 167, 240);
+  &-nfts {
+    .ant-tabs-nav {
+      width: 150px;
+      &::before {
+        border: none;
+      }
+    }
+    .collection {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      &:hover {
+        background: rgb(164, 206, 240);
+        cursor: pointer;
+      }
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+        margin-right: 24px;
+      }
+    }
+
+    .nft-item {
+      display: flex;
+      margin-bottom: 20px;
+      align-items: center;
+      img {
+        width: 200px;
+        height: 200px;
+        border-radius: 20px;
+        margin-right: 24px;
+      }
+      &_right {
+        p {
+          margin-bottom: 6px;
+        }
+      }
+    }
+  }
 }
