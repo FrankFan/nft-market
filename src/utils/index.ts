@@ -21,3 +21,8 @@ export const truncateAddress = (address: string) => {
   if (!match) return address;
   return `${match[1]}…${match[2]}`;
 };
+
+/**
+ * 占位图
+ */
+export const logoUrl = 'https://via.placeholder.com/260x260';

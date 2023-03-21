@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export const NavBar = () => {
   return (
@@ -20,6 +21,14 @@ export const NavBar = () => {
           <NavLink to='/rankings'>collection </NavLink>
         </li> */}
       </ul>
+      <div className='wallet'>
+        <ConnectButton
+          accountStatus={{
+            smallScreen: 'avatar',
+            largeScreen: 'full',
+          }}
+        />
+      </div>
     </nav>
   );
 };

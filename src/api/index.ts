@@ -62,10 +62,13 @@ export function getWalletNFTCollections(walletAddress: string) {
  * 根据钱包地址获取所有的 NFT
  * https://docs.moralis.io/web3-data-api/evm/reference/get-wallet-nfts
  */
-export function getNFTByWalletAddress(walletAddress: string) {
+export function getNFTByWalletAddress(walletAddress: string, chain = '') {
   return requestApi({
     url: `${baseURL}/${walletAddress}/nft`,
     method: 'get',
+    body: {
+      chain: chain,
+    },
     debug,
   });
 }

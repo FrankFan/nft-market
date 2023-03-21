@@ -4,7 +4,8 @@ import { Input, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import './index.scss';
 import { Link } from 'react-router-dom';
-import { convertIpfs2Http } from '../../utils';
+import { convertIpfs2Http, logoUrl } from '../../utils';
+import { useAccount, useConnect, useNetwork } from 'wagmi';
 
 interface displayDataType {
   token_address: string;
@@ -31,9 +32,6 @@ interface MyNftItemDataType {
   token_uri: string;
 }
 
-const logoUrl = 'https://via.placeholder.com/260x260';
-const myAddress = `0xa9Aa4613FAdA2287935CE5d6D375c28d248b5b50`;
-
 export const My = () => {
   const [walletCollections, setWalletCollections] = useState({
     nftERC721: [],
@@ -43,7 +41,32 @@ export const My = () => {
   const [myNFT, setMyNFT] = useState<MyNftItemDataType[]>([]);
 
   const [loading, setLoading] = useState(false);
-  const [searchValue, setSeachValue] = useState('');
+  // const [queryChain, setQueryChain] = useState();
+  const { address = '' } = useAccount();
+
+  const [searchValue, setSeachValue] = useState<string>(String(address));
+
+  // console.log(`----- , address = `, address);
+
+  // const myconnect = useConnect();
+  const { chain } = useNetwork();
+  const chainName = (chain?.name as string) || '';
+  // console.log('@@@@@@ ', chainName);
+
+  const mapping = {
+    Ethereum: 'eth',
+    Goerli: 'goerli',
+    Polygon: 'polygon',
+    'Arbitrum One': 'arbitrum',
+  };
+  // @ts-ignore
+  const queryChain = mapping[chainName];
+
+  if (chainName) {
+    // @ts-ignore
+    // setQueryChain(queryChain);
+    // console.log('queryChain', queryChain);
+  }
 
   // useEffect(() => {
   //   getWalletNFTCollections(myAddress)
@@ -64,14 +87,15 @@ export const My = () => {
   //     .catch((err) => console.log(err));
   // }, []);
 
-  // useEffect(() => {
-  //   getNFTByWalletAddress(myAddress)
-  //     .then((res) => {
-  //       const { result } = res;
-  //       setMyNFT(result);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+  useEffect(() => {
+    address &&
+      getNFTByWalletAddress(address, queryChain)
+        .then((res) => {
+          const { result } = res;
+          setMyNFT(result);
+        })
+        .catch((err) => console.log(err));
+  }, [address, queryChain]);
 
   const onChange = (key: string) => {
     console.log(key);
@@ -125,12 +149,11 @@ export const My = () => {
   ];
 
   const renderMyNftItem = () => {
-    return myNFT.map((nft) => {
-      // console.log('---', nft.metadata, JSON.parse(nft.metadata));
+    return myNFT.map((nft, index) => {
       const { image } = JSON.parse(nft.metadata) || {};
 
       return (
-        <div key={nft.token_id} className='nft-item'>
+        <div key={index} className='nft-item'>
           <img
             src={convertIpfs2Http(image)}
             alt='nft'
