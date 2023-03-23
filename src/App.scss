@@ -1,3 +1,9 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
 .layout-default {
   width: 70vw;
   margin: 0 auto;
@@ -55,6 +61,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgb(49 46 129);
+  color: #fff;
+  text-align: center;
+  p:first-child {
+    margin-bottom: 10px;
+  }
+
+  a {
+    color: antiquewhite;
+  }
 }
 
 p {

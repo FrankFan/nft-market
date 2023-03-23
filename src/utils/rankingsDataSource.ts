@@ -53,4 +53,7 @@ export const rankList = [
     coverImg:
       'https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?auto=format&w=384',
   },
+  {
+    contractAddress: '0x306b1ea3ecdf94ab739f1910bbda052ed4a9f949',
+  },
 ];

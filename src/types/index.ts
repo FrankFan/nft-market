@@ -14,3 +14,25 @@ export interface NftCollectionItemType {
   last_metadata_sync: string;
   minter_address: string;
 }
+
+export type RankType = {
+  address: string;
+  contractMetadata: {
+    name: string;
+    symbol: string;
+    totalSupply: string;
+    tokenType: string;
+    contractDeployer: string;
+    deployedBlockNumber: number;
+    openSea: {
+      floorPrice: number;
+      collectionName: string;
+      safelistRequestStatus: string;
+      imageUrl: string;
+      description: string;
+      lastIngestedAt: string;
+    };
+  };
+};
+
+export type RankListType = RankType[];

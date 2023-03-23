@@ -2,27 +2,42 @@
   h1 {
     padding-bottom: 20px;
   }
-  &__content {
-    div {
-      margin-bottom: 10px;
+  &__body {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+  }
+}
 
-      a {
-        display: flex;
-        height: 50px;
-        align-items: center;
-        text-decoration: none;
-        color: rgba(55, 65, 81, 1);
-        border-radius: 10px;
-        &:hover {
-          background: rgb(207, 233, 251);
-        }
-        img {
-          width: 50px;
-          height: 50px;
-          border-radius: 50px;
-          margin-right: 30px;
-        }
+.rank-item {
+  margin-bottom: 10px;
+  &__content {
+    width: 420px;
+    border: 1px solid rgb(165 180 252);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    .name {
+      span {
+        margin-left: 6px;
       }
     }
+  }
+
+  a {
+    text-decoration: none;
+    color: rgba(55, 65, 81, 1);
+    &:hover {
+      background: rgb(207, 233, 251);
+    }
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin-right: 30px;
   }
 }

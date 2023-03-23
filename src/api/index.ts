@@ -5,6 +5,9 @@ const debug = false;
 const API_DOMAIN = import.meta.env.VITE_API_DOMAIN;
 const baseURL = `${API_DOMAIN}`;
 
+const alchemy_api_key = `1GfMyHJVGOiE3wGfvx8riJhB_THIf9Dw`;
+const alchemy_base_url = `https://eth-mainnet.g.alchemy.com/nft/v2/${alchemy_api_key}`;
+
 type NftCollectionType = {
   contractAddress: string;
   chainId: string;
@@ -69,6 +72,38 @@ export function getNFTByWalletAddress(walletAddress: string, chain = '') {
     method: 'get',
     body: {
       chain: chain,
+    },
+    debug,
+  });
+}
+
+/**
+ * 获取合约信息
+ * https://docs.alchemy.com/reference/getcontractmetadata
+ * https://eth-mainnet.g.alchemy.com/nft/v2/{apiKey}/getContractMetadata
+ */
+export function getContractMetadataSingle(contractAddress: string) {
+  return requestApi({
+    url: `${alchemy_base_url}/getContractMetadata`,
+    method: 'get',
+    body: {
+      contractAddress,
+    },
+    debug,
+  });
+}
+
+/**
+ * 获取合约信息批量
+ * https://docs.alchemy.com/reference/getcontractmetadatabatch
+ * https://eth-mainnet.g.alchemy.com/nft/v2/{apiKey}/getcontractmetadatabatch
+ */
+export function getContractMetadataBatch(contractAddresses: string[]) {
+  return requestApi({
+    url: `${alchemy_base_url}/getContractMetadataBatch`,
+    method: 'post',
+    body: {
+      contractAddresses,
     },
     debug,
   });
