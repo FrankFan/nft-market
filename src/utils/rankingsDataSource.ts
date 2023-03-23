@@ -56,4 +56,7 @@ export const rankList = [
   {
     contractAddress: '0x306b1ea3ecdf94ab739f1910bbda052ed4a9f949',
   },
+  {
+    contractAddress: '0x67405cadb820c2d89b8d6da3e42ef6a39089c831',
+  },
 ];
