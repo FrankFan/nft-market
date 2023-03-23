@@ -1,3 +1,4 @@
+import { Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getNFTDetaildData } from '../../api';
@@ -21,43 +22,70 @@ type DetailType = {
   token_hash: string;
   token_id: string;
   token_uri: string;
+  normalized_metadata: MetadataType;
+};
+
+type MetadataType = {
+  name: string;
+  description: string;
+  image: string;
+  external_link?: string;
+  animation_url?: string;
+  attributes?: [] | {};
+  media?: object;
 };
 
 export const AssetsDetail = () => {
   const { address = '', tokenId = '' } = useParams();
 
   const [detail, setDetail] = useState<DetailType>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getNFTDetaildData({
       contractAddress: address,
       tokenId,
     }).then((res) => {
-      console.log(res);
-      setDetail(res);
+      setDetail({
+        ...res,
+        normalized_metadata: JSON.parse(res.metadata),
+      });
+      setLoading(false);
     });
   }, []);
 
   if (!detail) return <></>;
+  // console.log(detail);
+
+  const { contract_type, owner_of } = detail;
+  const { name, image, attributes, description } = detail.normalized_metadata;
 
   return (
     <div className='assets-detail'>
       <BackButton />
-      <h1 className='title'>
-        {detail?.name}#{detail?.token_id}
-      </h1>
-      <div className='assets-detail__content'>
-        <img
-          src={convertIpfs2Http(JSON.parse(detail?.metadata).image)}
-          alt='img'
-        />
-        <div className='info'>
-          <p>Type: {detail?.contract_type}</p>
-          <p title={detail.owner_of}>
-            Owner: {truncateAddress(detail?.owner_of)}
-          </p>
+      <Spin spinning={loading} delay={500}>
+        <h1 className='title'>{name}</h1>
+        <div className='assets-detail__content'>
+          <img src={convertIpfs2Http(image)} alt='img' />
+          <div className='info'>
+            <p>Type: {contract_type}</p>
+            <p title={owner_of}>Owner: {truncateAddress(owner_of)}</p>
+            <p>Description: {description}</p>
+            <p></p>
+            <pre>
+              {Array.isArray(attributes) ? (
+                attributes?.map((item, index) => (
+                  <p key={index} className='attr'>
+                    {JSON.stringify(item, null, 2)}
+                  </p>
+                ))
+              ) : (
+                <p>{JSON.stringify(attributes, null, 2)}</p>
+              )}
+            </pre>
+          </div>
         </div>
-      </div>
+      </Spin>
     </div>
   );
 };

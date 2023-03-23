@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getNFTByWalletAddress, getWalletNFTCollections } from '../../api';
-import { Input, Tabs } from 'antd';
+import { Input, Spin, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import './index.scss';
 import { Link } from 'react-router-dom';
 import { convertIpfs2Http, logoUrl } from '../../utils';
-import { useAccount, useConnect, useNetwork } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 
 interface displayDataType {
   token_address: string;
@@ -40,7 +40,8 @@ export const My = () => {
 
   const [myNFT, setMyNFT] = useState<MyNftItemDataType[]>([]);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [spinLoading, setSpinLoading] = useState(true);
   // const [queryChain, setQueryChain] = useState();
   const { address = '' } = useAccount();
 
@@ -93,6 +94,8 @@ export const My = () => {
         .then((res) => {
           const { result } = res;
           setMyNFT(result);
+          setSpinLoading(false);
+          setLoading(false);
         })
         .catch((err) => console.log(err));
   }, [address, queryChain]);
@@ -175,12 +178,12 @@ export const My = () => {
 
   const onSearch = (value: string) => {
     if (value.length !== 42) return;
-    setLoading(true);
     getNFTByWalletAddress(value)
       .then((res) => {
-        setLoading(false);
         const { result } = res;
         setMyNFT(result);
+        setLoading(false);
+        setSpinLoading(false);
       })
       .catch((err) => console.log(err));
   };
@@ -198,11 +201,13 @@ export const My = () => {
           onChange={(e) => setSeachValue(e.target.value)}
         />
       </div>
-      <h2>NFT total: {myNFT.length}</h2>
-      <div className='my-nfts'>
-        {/* <Tabs defaultActiveKey='1' items={items} onChange={onChange} /> */}
-        {renderMyNftItem()}
-      </div>
+      <Spin spinning={spinLoading}>
+        <h2>NFT total: {myNFT.length}</h2>
+        <div className='my-nfts'>
+          {/* <Tabs defaultActiveKey='1' items={items} onChange={onChange} /> */}
+          {renderMyNftItem()}
+        </div>
+      </Spin>
     </div>
   );
 };

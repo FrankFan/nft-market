@@ -36,7 +36,8 @@ export function getNftByCollection({
 }
 
 /**
- * 获取nft详情数据
+ * 根据合约地址、tokenId 获取nft metadata 详情数据
+ * https://docs.moralis.io/web3-data-api/evm/reference/get-nft-metadata
  */
 export function getNFTDetaildData({ contractAddress, tokenId }: NftDetailType) {
   return requestApi({
