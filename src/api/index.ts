@@ -12,6 +12,7 @@ type NftCollectionType = {
   contractAddress: string;
   chainId: string;
   limit?: number;
+  cursor?: string;
 };
 
 export interface NftDetailType {
@@ -21,11 +22,13 @@ export interface NftDetailType {
 
 /**
  * 获取 nft 合集数据内容
+ * https://docs.moralis.io/web3-data-api/evm/reference/get-contract-nfts
  */
 export function getNftByCollection({
   contractAddress,
   chainId,
   limit,
+  cursor,
 }: NftCollectionType) {
   return requestApi({
     url: `${baseURL}/nft/${contractAddress}`,
@@ -33,6 +36,9 @@ export function getNftByCollection({
     body: {
       chainId,
       limit,
+      normalizeMetadata: true,
+      // disable_totals: true,
+      cursor,
     },
     debug,
   });
@@ -46,6 +52,9 @@ export function getNFTDetaildData({ contractAddress, tokenId }: NftDetailType) {
   return requestApi({
     url: `${baseURL}/nft/${contractAddress}/${tokenId}`,
     method: 'get',
+    body: {
+      normalizeMetadata: true,
+    },
     debug,
   });
 }

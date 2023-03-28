@@ -1,3 +1,8 @@
+/**
+ * 将ipfs协议转化为http协议
+ * @param metadataImage ipfs开头的地址
+ * @returns http地址
+ */
 export const convertIpfs2Http = (metadataImage: string | undefined) => {
   // "ipfs://QmR2cwTitB7UfdDBz9fmJkGgwoRNSoZTZ6ZbttiCQV1Z99"
   if (!metadataImage) return;

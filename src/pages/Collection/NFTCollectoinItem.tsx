@@ -7,10 +7,9 @@ export const NFTCollectionItem = ({
   token_id,
   name,
   token_address,
-  metadata,
+  normalized_metadata,
 }: NftCollectionItemType) => {
-  const metadataObj = JSON.parse(metadata);
-  const imgUrl = convertIpfs2Http(metadataObj.image);
+  const imgUrl = convertIpfs2Http(normalized_metadata.image);
 
   return (
     <Link to={`/assets/${token_address}/${token_id}`}>

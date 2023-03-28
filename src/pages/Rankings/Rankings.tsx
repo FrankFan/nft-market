@@ -27,8 +27,8 @@ export const Rankings = () => {
 
   return (
     <div className='rankings'>
-      <h1>Ranking List</h1>
       <Spin spinning={loading}>
+        <h1>Ranking List</h1>
         <div className='rankings__body'>
           {ranks.map((item) => (
             <RankItem key={item.address} {...item} />

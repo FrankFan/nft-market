@@ -9,10 +9,19 @@ export interface NftCollectionItemType {
   name: string;
   symbol: string;
   token_uri: string;
-  metadata: string;
+  normalized_metadata: NormalizedMetadata;
   last_token_uri_sync: string;
   last_metadata_sync: string;
   minter_address: string;
+}
+
+interface NormalizedMetadata {
+  name: string;
+  description: string;
+  image: string;
+  external_link: string;
+  animation_url: string;
+  attributes: any;
 }
 
 export type RankType = {

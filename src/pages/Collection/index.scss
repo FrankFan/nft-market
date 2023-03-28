@@ -1,6 +1,14 @@
 .nft-collection {
   width: 70vw;
   margin: 0 auto;
+  &__info {
+    margin: 10px 0;
+    .ant-card-body {
+      p {
+        margin-bottom: 6px;
+      }
+    }
+  }
   &__content {
     display: flex;
     flex-wrap: wrap;
@@ -27,4 +35,22 @@
       overflow: hidden;
     }
   }
+
+  &-infinite-list {
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      img {
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.infiniteList {
+  border: 2px solid fuchsia;
 }

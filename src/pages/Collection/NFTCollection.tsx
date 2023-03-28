@@ -1,51 +1,63 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getNftByCollection } from '../../api';
-import { NftCollectionItemType } from '../../types';
-import { NFTCollectionItem } from './NFTCollectoinItem';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getContractMetadataSingle, getNftByCollection } from '../../api';
+import { NftCollectionItemType, RankType } from '../../types';
 import './index.scss';
 import { BackButton } from '../../Components/BackButton';
-import { Spin } from 'antd';
+import { Card, message, Spin } from 'antd';
+import InfiniteList2 from '../../Components/InfiniteList2';
 
 export const NFTCollection = () => {
-  const [list, setList] = useState<NftCollectionItemType[]>([]);
+  const navigate = useNavigate();
+  const [collectionInfo, setCollectionInfo] = useState<RankType>();
   const { address } = useParams();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getNFTCollectionByContract();
-  }, []);
+    if (address) {
+      getCollectInfo(address).then((collection_info) => {
+        setCollectionInfo(collection_info);
+        setLoading(false);
+      });
+    }
+  }, [address]);
 
-  const getNFTCollectionByContract = async () => {
-    if (!address) return [];
-
-    const contractAddress = address;
-    const chainId = 'eth';
-    const limit = 20;
-    const { result, page, page_size, total } = await getNftByCollection({
-      contractAddress,
-      chainId,
-      limit,
-    });
-    setList(result);
-    setLoading(false);
+  const getCollectInfo = async (contractAddress: string): Promise<RankType> => {
+    const result = await getContractMetadataSingle(contractAddress);
+    console.log(result);
+    return result;
   };
 
   return (
     <div className='nft-collection'>
-      <BackButton />
       <Spin spinning={loading}>
-        {list.length > 0 ? (
-          <div className='nft-collection__info'>
-            <h1>{list[0].name}</h1>
-            <p>Contract Type: {list[0].contract_type}</p>
-            <p>symbol: {list[0].symbol}</p>
-          </div>
-        ) : null}
-        <div className='nft-collection__content'>
-          {list.map((item) => (
-            <NFTCollectionItem key={item.token_id} {...item} />
-          ))}
+        <BackButton />
+        <div className='nft-collection__info'>
+          <Card title={collectionInfo?.contractMetadata.openSea.collectionName}>
+            <p>
+              <span className='bold'>认证状态: </span>
+              {collectionInfo?.contractMetadata.openSea
+                .safelistRequestStatus === 'verified'
+                ? '✅'
+                : ''}
+            </p>
+            <p>
+              <span className='bold'>合约标准: </span>
+              {collectionInfo?.contractMetadata.tokenType}
+            </p>
+            <p>
+              <span className='bold'>symbol: </span>
+              {collectionInfo?.contractMetadata.symbol}
+            </p>
+            <p>
+              <span className='bold'>总供应量: </span>
+              {collectionInfo?.contractMetadata.totalSupply}
+            </p>
+          </Card>
+        </div>
+
+        <div className='nft-collection-infinite-list'>
+          <InfiniteList2 address={address as string} />
         </div>
       </Spin>
     </div>

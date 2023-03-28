@@ -1,4 +1,4 @@
-import { Spin } from 'antd';
+import { Spin, Image } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getNFTDetaildData } from '../../api';
@@ -46,16 +46,12 @@ export const AssetsDetail = () => {
       contractAddress: address,
       tokenId,
     }).then((res) => {
-      setDetail({
-        ...res,
-        normalized_metadata: JSON.parse(res.metadata),
-      });
+      setDetail(res);
       setLoading(false);
     });
   }, []);
 
   if (!detail) return <></>;
-  // console.log(detail);
 
   const { contract_type, owner_of } = detail;
   const { name, image, attributes, description } = detail.normalized_metadata;
@@ -66,7 +62,13 @@ export const AssetsDetail = () => {
       <Spin spinning={loading} delay={500}>
         <h1 className='title'>{name}</h1>
         <div className='assets-detail__content'>
-          <img src={convertIpfs2Http(image)} alt='img' />
+          <div className='img-wrapper'>
+            <Image
+              width={300}
+              style={{ borderRadius: 20 }}
+              src={convertIpfs2Http(image)}
+            />
+          </div>
           <div className='info'>
             <p>Type: {contract_type}</p>
             <p title={owner_of}>Owner: {truncateAddress(owner_of)}</p>

@@ -57,22 +57,37 @@
 }
 
 .footer {
-  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgb(49 46 129);
   color: #fff;
   text-align: center;
-  p:first-child {
-    margin-bottom: 10px;
-  }
+  .copyleft {
+    padding: 10px 0;
+    p:first-child {
+      margin-bottom: 6px;
+    }
 
-  a {
-    color: antiquewhite;
+    a {
+      color: antiquewhite;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 
-p {
+p,
+h4 {
   margin: 0;
+}
+
+.ant-list-item-meta {
+  align-items: center !important;
+}
+
+.bold {
+  font-weight: bold;
 }
