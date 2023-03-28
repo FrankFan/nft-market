@@ -61,7 +61,7 @@ export const My = () => {
     'Arbitrum One': 'arbitrum',
   };
   // @ts-ignore
-  const queryChain = mapping[chainName];
+  let queryChain = mapping[chainName] || 'eth';
 
   if (chainName) {
     // @ts-ignore
@@ -89,7 +89,8 @@ export const My = () => {
   // }, []);
 
   useEffect(() => {
-    address &&
+    if (!queryChain) queryChain = 'eth';
+    if (address) {
       getNFTByWalletAddress(address, queryChain)
         .then((res) => {
           const { result } = res;
@@ -98,6 +99,10 @@ export const My = () => {
           setLoading(false);
         })
         .catch((err) => console.log(err));
+    } else {
+      setLoading(false);
+      setSpinLoading(false);
+    }
   }, [address, queryChain]);
 
   const onChange = (key: string) => {
@@ -178,7 +183,7 @@ export const My = () => {
 
   const onSearch = (value: string) => {
     if (value.length !== 42) return;
-    getNFTByWalletAddress(value)
+    getNFTByWalletAddress(value, queryChain)
       .then((res) => {
         const { result } = res;
         setMyNFT(result);
@@ -202,7 +207,7 @@ export const My = () => {
         />
       </div>
       <Spin spinning={spinLoading}>
-        <h2>NFT total: {myNFT.length}</h2>
+        {myNFT.length > 0 ? <h2>NFT total: {myNFT.length}</h2> : ''}
         <div className='my-nfts'>
           {/* <Tabs defaultActiveKey='1' items={items} onChange={onChange} /> */}
           {renderMyNftItem()}

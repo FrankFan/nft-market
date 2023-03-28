@@ -54,14 +54,19 @@ export const AssetsDetail = () => {
 
   if (!detail) return <></>;
 
-  const { contract_type, owner_of } = detail;
-  const { name, image, attributes, description } = detail.normalized_metadata;
+  const { contract_type, owner_of, name, token_id } = detail;
+  const {
+    name: metadataName,
+    image,
+    attributes,
+    description,
+  } = detail.normalized_metadata;
 
   return (
     <div className='assets-detail'>
       <BackButton />
       <Spin spinning={loading} delay={500}>
-        <h1 className='title'>{name}</h1>
+        <h1 className='title'>{metadataName || name}</h1>
         <div className='assets-detail__content'>
           <Space>
             <div className='img-wrapper'>
@@ -72,11 +77,24 @@ export const AssetsDetail = () => {
               />
             </div>
             <div className='info'>
-              <p>Type: {contract_type}</p>
-              <p title={owner_of}>Owner: {truncateAddress(owner_of)}</p>
-              {description ? `Description: ${description}` : ''}
+              <p>
+                <span className='bold'>Type: </span>
+                {contract_type}
+              </p>
+              <p>
+                <span className='bold'>TokenId: </span>
+                {token_id}
+              </p>
+              <p title={owner_of}>
+                <span className='bold'>Owner: </span>
+                {truncateAddress(owner_of)}
+              </p>
             </div>
           </Space>
+        </div>
+        <div className='assets-detail__description'>
+          <div className='heading'>Description</div>
+          {description ? `Description: ${description}` : ''}
         </div>
         <div className='assets-detail__attributes'>
           <div className='heading'>Attributes</div>

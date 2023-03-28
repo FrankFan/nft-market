@@ -30,9 +30,8 @@ export const Rankings = () => {
       <Spin spinning={loading}>
         <h1>Ranking List</h1>
         <div className='rankings__body'>
-          {ranks.map((item) => (
-            <RankItem key={item.address} {...item} />
-          ))}
+          {ranks &&
+            ranks.map((item) => <RankItem key={item.address} {...item} />)}
         </div>
       </Spin>
     </div>
