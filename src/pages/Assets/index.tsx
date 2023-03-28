@@ -1,9 +1,10 @@
-import { Spin, Image } from 'antd';
+import { Spin, Image, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getNFTDetaildData } from '../../api';
 import { BackButton } from '../../Components/BackButton';
 import { convertIpfs2Http, truncateAddress } from '../../utils';
+import { AttributeCard } from './AttributeCard';
 import './index.scss';
 
 type DetailType = {
@@ -62,30 +63,32 @@ export const AssetsDetail = () => {
       <Spin spinning={loading} delay={500}>
         <h1 className='title'>{name}</h1>
         <div className='assets-detail__content'>
-          <div className='img-wrapper'>
-            <Image
-              width={300}
-              style={{ borderRadius: 20 }}
-              src={convertIpfs2Http(image)}
-            />
-          </div>
-          <div className='info'>
-            <p>Type: {contract_type}</p>
-            <p title={owner_of}>Owner: {truncateAddress(owner_of)}</p>
-            <p>Description: {description}</p>
-            <p></p>
-            <pre>
-              {Array.isArray(attributes) ? (
-                attributes?.map((item, index) => (
-                  <p key={index} className='attr'>
-                    {JSON.stringify(item, null, 2)}
-                  </p>
-                ))
-              ) : (
-                <p>{JSON.stringify(attributes, null, 2)}</p>
-              )}
-            </pre>
-          </div>
+          <Space>
+            <div className='img-wrapper'>
+              <Image
+                width={200}
+                style={{ borderRadius: 20 }}
+                src={convertIpfs2Http(image)}
+              />
+            </div>
+            <div className='info'>
+              <p>Type: {contract_type}</p>
+              <p title={owner_of}>Owner: {truncateAddress(owner_of)}</p>
+              {description ? `Description: ${description}` : ''}
+            </div>
+          </Space>
+        </div>
+        <div className='assets-detail__attributes'>
+          <div className='heading'>Attributes</div>
+          <Space wrap>
+            {Array.isArray(attributes) ? (
+              attributes?.map((item, index) => (
+                <AttributeCard key={index} {...item} />
+              ))
+            ) : (
+              <p>{JSON.stringify(attributes, null, 2)}</p>
+            )}
+          </Space>
         </div>
       </Spin>
     </div>
