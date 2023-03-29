@@ -30,4 +30,4 @@ export const truncateAddress = (address: string) => {
 /**
  * 占位图
  */
-export const logoUrl = 'https://via.placeholder.com/260x260';
+export const logoUrl = 'https://via.placeholder.com/260x260?text=nft';

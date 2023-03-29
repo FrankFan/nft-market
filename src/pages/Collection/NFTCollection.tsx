@@ -4,11 +4,12 @@ import { getContractMetadataSingle, getNftByCollection } from '../../api';
 import { NftCollectionItemType, RankType } from '../../types';
 import './index.scss';
 import { BackButton } from '../../Components/BackButton';
-import { Card, message, Spin } from 'antd';
+import { Card, message, Spin, Typography } from 'antd';
 import InfiniteList2 from '../../Components/InfiniteList2';
 
+const { Title } = Typography;
+
 export const NFTCollection = () => {
-  const navigate = useNavigate();
   const [collectionInfo, setCollectionInfo] = useState<RankType>();
   const { address } = useParams();
   const [loading, setLoading] = useState(true);
@@ -24,7 +25,6 @@ export const NFTCollection = () => {
 
   const getCollectInfo = async (contractAddress: string): Promise<RankType> => {
     const result = await getContractMetadataSingle(contractAddress);
-    console.log(result);
     return result;
   };
 
@@ -33,6 +33,7 @@ export const NFTCollection = () => {
       <Spin spinning={loading}>
         <BackButton />
         <div className='nft-collection__info'>
+          <Title level={2}>合集</Title>
           <Card title={collectionInfo?.contractMetadata.openSea.collectionName}>
             <p>
               <span className='bold'>认证状态: </span>

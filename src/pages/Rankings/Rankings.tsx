@@ -1,10 +1,12 @@
-import { Spin } from 'antd';
+import { Spin, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { getContractMetadataBatch } from '../../api';
 import { RankListType } from '../../types';
 import { rankList } from '../../utils/rankingsDataSource';
 import './index.scss';
 import { RankItem } from './RankItem';
+
+const { Title } = Typography;
 
 export const Rankings = () => {
   const [ranks, setRanks] = useState<RankListType>([]);
@@ -28,7 +30,7 @@ export const Rankings = () => {
   return (
     <div className='rankings'>
       <Spin spinning={loading}>
-        <h1>Ranking List</h1>
+        <Title level={2}>Ranking List</Title>
         <div className='rankings__body'>
           {ranks &&
             ranks.map((item) => <RankItem key={item.address} {...item} />)}

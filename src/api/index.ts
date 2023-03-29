@@ -37,7 +37,7 @@ export function getNftByCollection({
       chainId,
       limit,
       normalizeMetadata: true,
-      // disable_totals: true,
+      // disable_totals: true, // not work
       cursor,
     },
     debug,
@@ -75,7 +75,7 @@ export function getWalletNFTCollections(walletAddress: string) {
  * 根据钱包地址获取所有的 NFT
  * https://docs.moralis.io/web3-data-api/evm/reference/get-wallet-nfts
  */
-export function getNFTByWalletAddress(walletAddress: string, chain = '') {
+export function getNFTByWalletAddress(walletAddress: string, chain = 'eth') {
   return requestApi({
     url: `${baseURL}/${walletAddress}/nft`,
     method: 'get',
@@ -85,6 +85,42 @@ export function getNFTByWalletAddress(walletAddress: string, chain = '') {
     debug,
   });
 }
+
+/**
+ * 搜索 NFT
+ * https://deep-index.moralis.io/api/v2/nft/search
+ */
+export function searchNFT({
+  keywords,
+  chain = 'eth',
+  filter,
+  cursor,
+  limit,
+  contractAddress,
+}: {
+  keywords: string;
+  chain?: string;
+  filter?: string;
+  cursor?: string;
+  limit?: number;
+  contractAddress: string;
+}) {
+  return requestApi({
+    url: `${baseURL}/nft/search`,
+    method: 'get',
+    body: {
+      chain,
+      format: 'decimal',
+      q: keywords,
+      filter,
+      cursor,
+      limit,
+      'addresses[0]': contractAddress,
+    },
+  });
+}
+
+/* ----------  alchemy api ↓↓↓  ---------- */
 
 /**
  * 获取合约信息

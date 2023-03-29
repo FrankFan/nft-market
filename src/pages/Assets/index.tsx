@@ -1,4 +1,4 @@
-import { Spin, Image, Space } from 'antd';
+import { Spin, Image, Space, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getNFTDetaildData } from '../../api';
@@ -6,6 +6,8 @@ import { BackButton } from '../../Components/BackButton';
 import { convertIpfs2Http, truncateAddress } from '../../utils';
 import { AttributeCard } from './AttributeCard';
 import './index.scss';
+
+const { Text, Title } = Typography;
 
 type DetailType = {
   amount: string;
@@ -77,28 +79,39 @@ export const AssetsDetail = () => {
               />
             </div>
             <div className='info'>
-              <p>
-                <span className='bold'>Type: </span>
-                {contract_type}
-              </p>
-              <p>
-                <span className='bold'>TokenId: </span>
-                {token_id}
-              </p>
-              <p title={owner_of}>
-                <span className='bold'>Owner: </span>
-                {truncateAddress(owner_of)}
-              </p>
+              <Space direction='vertical'>
+                <div>
+                  <span className='bold'>Type: </span>
+                  {contract_type}
+                </div>
+                <div>
+                  <span className='bold'>TokenId: </span>
+                  <Text
+                    style={{ width: 200 }}
+                    ellipsis={{ suffix: '...' }}
+                    copyable={{ text: token_id }}
+                  >
+                    {token_id}
+                  </Text>
+                </div>
+
+                <div>
+                  <span className='bold'>Owner: </span>
+                  <Text copyable={{ text: owner_of }}>
+                    {truncateAddress(owner_of)}
+                  </Text>
+                </div>
+              </Space>
             </div>
           </Space>
         </div>
         <div className='assets-detail__description'>
-          <div className='heading'>Description</div>
-          {description ? `Description: ${description}` : ''}
+          <Title level={2}>Description</Title>
+          {description ? `${description}` : ''}
         </div>
         <div className='assets-detail__attributes'>
-          <div className='heading'>Attributes</div>
-          <Space wrap>
+          <Title level={2}>Attributes</Title>
+          <Space size='middle' wrap>
             {Array.isArray(attributes) ? (
               attributes?.map((item, index) => (
                 <AttributeCard key={index} {...item} />
