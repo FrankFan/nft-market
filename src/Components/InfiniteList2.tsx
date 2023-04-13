@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Button,
+  Card,
   Empty,
   Image,
   Input,
   List,
   message,
+  Skeleton,
   Spin,
-  Tooltip,
   Typography,
 } from 'antd';
 // import { FixedSizeList } from 'react-window';
@@ -22,25 +24,35 @@ interface NFTItemType {
   imgUrl: string;
   tokenId: string;
   token_address: string;
+  loading?: boolean;
 }
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const ContainerHeight = 500;
+
+const limit = 50;
 
 const InfiniteList2 = ({ address }: { address: string }) => {
   const [data, setData] = useState<NFTItemType[]>([]);
   const [cursor, setCursor] = useState('');
   const [searchValue, setSeachValue] = useState('');
   const [loading, setLoading] = useState(false);
+  const [initLoading, setInitLoading] = useState(true);
 
   useEffect(() => {
     appendData();
+    setInitLoading(false);
   }, []);
 
   const appendData = () => {
+    setLoading(true);
+    // loadmore
+    // @ts-ignore
+    setData(data.concat([...new Array(limit)].map(() => ({ loading: true }))));
     getNFTCollectionByContract(address, cursor).then((list) => {
       setData(data.concat(list));
+      setLoading(false);
       message.success(`${list.length} more items loaded! `);
     });
   };
@@ -51,7 +63,6 @@ const InfiniteList2 = ({ address }: { address: string }) => {
   ) => {
     const contractAddress = address;
     const chainId = 'eth';
-    const limit = 50;
     const { result, cursor: retCursor } = await getNftByCollection({
       contractAddress,
       chainId,
@@ -110,12 +121,26 @@ const InfiniteList2 = ({ address }: { address: string }) => {
     }
   };
 
+  const loadMore = !loading ? (
+    <div
+      style={{
+        textAlign: 'center',
+        marginTop: 12,
+        height: 32,
+        lineHeight: '32px',
+      }}
+    >
+      <Button onClick={appendData}>loading more</Button>
+    </div>
+  ) : null;
+
   return (
     <>
       <div className='my-serarch'>
         <Input.Search
           placeholder='search NFTs by tokenId'
           size='large'
+          style={{ marginTop: 20 }}
           value={searchValue}
           loading={loading}
           enterButton
@@ -124,64 +149,43 @@ const InfiniteList2 = ({ address }: { address: string }) => {
         />
       </div>
       <Title level={2}>藏品</Title>
-      <Spin spinning={loading}>
-        {/* {data.length === 0 ? <Empty className='empty-status' /> : null} */}
-        <List>
-          <VirtualList
-            data={data}
-            height={ContainerHeight}
-            itemHeight={47}
-            itemKey='tokenId'
-            onScroll={onScroll}
-          >
-            {(item: NFTItemType) => (
-              <List.Item
-                key={item.tokenId}
-                actions={[
-                  <a
-                    key='list-go'
-                    href={`https://opensea.io/assets/ethereum/${item.token_address}`}
-                    target={'_blank'}
-                  >
-                    OpenSea
-                  </a>,
-                  <a
-                    key='list-edit'
-                    href={`https://blur.io/asset/${item.token_address}/${item.tokenId}`}
-                    target={'_blank'}
-                  >
-                    Blur.io
-                  </a>,
-                  <Link to={`/assets/${item.token_address}/${item.tokenId}`}>
-                    详情
-                  </Link>,
-                ]}
-              >
-                <List.Item.Meta
-                  avatar={
+
+      <List
+        className='nft-list'
+        grid={{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 4, xxl: 5 }}
+        loading={initLoading}
+        loadMore={loadMore}
+        dataSource={data}
+        rowKey='tokenId'
+        renderItem={(item) => (
+          <Link to={`/assets/${item.token_address}/${item.tokenId}`}>
+            <List.Item>
+              <Card
+                hoverable
+                style={{ maxWidth: 250 }}
+                cover={
+                  item.loading ? (
+                    <Skeleton.Image active />
+                  ) : (
                     <Image
-                      width={100}
-                      style={{ borderRadius: 20 }}
                       src={item.imgUrl}
                       fallback={logoUrl}
+                      preview={false}
                     />
-                  }
-                  title={
-                    <Text
-                      ellipsis={{
-                        suffix: item.tokenId.length > 10 ? '...' : undefined,
-                      }}
-                    >{`#${item.tokenId}`}</Text>
-                  }
-                />
-                <div className='nft-item-name'>
-                  <Text>{item.name}</Text>
-                </div>
-              </List.Item>
-            )}
-          </VirtualList>
-        </List>
-      </Spin>
+                  )
+                }
+              >
+                <Skeleton loading={item.loading} paragraph={{ rows: 2 }} active>
+                  <Card.Meta
+                    title={item.name}
+                    description={`#${item.tokenId}`}
+                  ></Card.Meta>
+                </Skeleton>
+              </Card>
+            </List.Item>
+          </Link>
+        )}
+      ></List>
     </>
   );
 };

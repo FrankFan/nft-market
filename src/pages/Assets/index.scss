@@ -3,22 +3,6 @@
     text-overflow: ellipsis;
     overflow: hidden;
   }
-  &__content {
-    img {
-      width: 350px;
-      height: 350px;
-      border-radius: 16px;
-    }
-
-    .info {
-      margin-left: 30px;
-      p {
-        margin-bottom: 15px;
-      }
-    }
-  }
-  &__attributes {
-  }
 }
 
 .attribute {

@@ -54,3 +54,15 @@
 .infiniteList {
   border: 2px solid fuchsia;
 }
+
+.nft-list {
+  .ant-card-cover {
+    .ant-skeleton-element {
+      display: flex;
+      .ant-skeleton-image {
+        display: flex;
+        width: 100%;
+      }
+    }
+  }
+}

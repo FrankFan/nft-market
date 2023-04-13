@@ -1,13 +1,14 @@
 import { Spin, Image, Space, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getNFTDetaildData } from '../../api';
+import { getContractMetadataSingle, getNFTDetaildData } from '../../api';
 import { BackButton } from '../../Components/BackButton';
 import { convertIpfs2Http, truncateAddress } from '../../utils';
 import { AttributeCard } from './AttributeCard';
 import './index.scss';
+import { RankType } from '../../types';
 
-const { Text, Title } = Typography;
+const { Text, Title, Paragraph } = Typography;
 
 type DetailType = {
   amount: string;
@@ -43,6 +44,7 @@ export const AssetsDetail = () => {
 
   const [detail, setDetail] = useState<DetailType>();
   const [loading, setLoading] = useState(true);
+  const [collectionInfo, setCollectionInfo] = useState<RankType>();
 
   useEffect(() => {
     getNFTDetaildData({
@@ -54,60 +56,96 @@ export const AssetsDetail = () => {
     });
   }, []);
 
-  if (!detail) return <></>;
+  useEffect(() => {
+    if (address) {
+      getCollectInfo(address).then((collection_info) => {
+        setCollectionInfo(collection_info);
+        setLoading(false);
+      });
+    }
+  }, [address]);
 
-  const { contract_type, owner_of, name, token_id } = detail;
-  const {
-    name: metadataName,
-    image,
-    attributes,
-    description,
-  } = detail.normalized_metadata;
+  const getCollectInfo = async (contractAddress: string): Promise<RankType> => {
+    const result = await getContractMetadataSingle(contractAddress);
+    return result;
+  };
+
+  if (!detail || !collectionInfo) return <></>;
+
+  const { owner_of } = detail;
+  const { attributes, image } = detail.normalized_metadata;
+
+  const contractMetadata = collectionInfo.contractMetadata;
 
   return (
     <div className='assets-detail'>
       <BackButton />
       <Spin spinning={loading} delay={500}>
-        <h1 className='title'>{metadataName || name}</h1>
+        <h1 className='title'>{contractMetadata.openSea.collectionName}</h1>
         <div className='assets-detail__content'>
-          <Space>
-            <div className='img-wrapper'>
-              <Image
-                width={200}
-                style={{ borderRadius: 20 }}
-                src={convertIpfs2Http(image)}
-              />
-            </div>
-            <div className='info'>
-              <Space direction='vertical'>
+          <Space size={32} align='start'>
+            <Image
+              width={400}
+              style={{ borderRadius: 20 }}
+              src={convertIpfs2Http(image)}
+            />
+
+            <Space direction='vertical'>
+              <Paragraph>
+                <div className='fw600 fs24 bold'>{contractMetadata.name}</div>
+              </Paragraph>
+
+              <Paragraph>
                 <div>
                   <span className='bold'>Type: </span>
-                  {contract_type}
+                  {contractMetadata.tokenType}
                 </div>
-                <div>
-                  <span className='bold'>TokenId: </span>
-                  <Text
-                    style={{ width: 200 }}
-                    ellipsis={{ suffix: '...' }}
-                    copyable={{ text: token_id }}
-                  >
-                    {token_id}
-                  </Text>
-                </div>
+              </Paragraph>
 
-                <div>
-                  <span className='bold'>Owner: </span>
-                  <Text copyable={{ text: owner_of }}>
-                    {truncateAddress(owner_of)}
-                  </Text>
+              <Paragraph copyable={{ text: tokenId }}>
+                <span className='bold'>TokenId: </span>
+                {tokenId}
+              </Paragraph>
+
+              <Paragraph>
+                <div className='fs20'>
+                  <span className='bold'>Symbol: </span>
+                  {contractMetadata.symbol}
                 </div>
-              </Space>
-            </div>
+              </Paragraph>
+
+              <Paragraph>
+                <div>
+                  <span className='bold'>totalSupply: </span>
+                  {contractMetadata.totalSupply}
+                </div>
+              </Paragraph>
+
+              <Paragraph copyable={{ text: owner_of }}>
+                <span className='bold'>Owner: </span>
+                {truncateAddress(owner_of)}
+              </Paragraph>
+
+              <Paragraph>
+                <span className='bold'>认证状态: </span>
+                {collectionInfo?.contractMetadata?.openSea
+                  ?.safelistRequestStatus === 'verified'
+                  ? '✅'
+                  : '❌'}
+              </Paragraph>
+
+              <Paragraph>
+                <div>
+                  <span className='bold'>Description: </span>
+                  <div className='fs14'>
+                    {collectionInfo.contractMetadata.openSea.description}
+                  </div>
+                </div>
+              </Paragraph>
+
+              {/* <Paragraph>{JSON.stringify(collectionInfo)}</Paragraph> */}
+            </Space>
           </Space>
-        </div>
-        <div className='assets-detail__description'>
-          <Title level={2}>Description</Title>
-          {description ? `${description}` : ''}
         </div>
         <div className='assets-detail__attributes'>
           <Title level={2}>Attributes</Title>
