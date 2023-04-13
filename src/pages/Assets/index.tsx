@@ -75,13 +75,13 @@ export const AssetsDetail = () => {
   const { owner_of } = detail;
   const { attributes, image } = detail.normalized_metadata;
 
-  const contractMetadata = collectionInfo.contractMetadata;
+  const contractMetadata = collectionInfo?.contractMetadata;
 
   return (
     <div className='assets-detail'>
       <BackButton />
       <Spin spinning={loading} delay={500}>
-        <h1 className='title'>{contractMetadata.openSea.collectionName}</h1>
+        <h1 className='title'>{contractMetadata?.openSea?.collectionName}</h1>
         <div className='assets-detail__content'>
           <Space size={32} align='start'>
             <Image
@@ -92,13 +92,13 @@ export const AssetsDetail = () => {
 
             <Space direction='vertical'>
               <Paragraph>
-                <div className='fw600 fs24 bold'>{contractMetadata.name}</div>
+                <div className='fw600 fs24 bold'>{contractMetadata?.name}</div>
               </Paragraph>
 
               <Paragraph>
                 <div>
                   <span className='bold'>Type: </span>
-                  {contractMetadata.tokenType}
+                  {contractMetadata?.tokenType}
                 </div>
               </Paragraph>
 
@@ -110,14 +110,14 @@ export const AssetsDetail = () => {
               <Paragraph>
                 <div className='fs20'>
                   <span className='bold'>Symbol: </span>
-                  {contractMetadata.symbol}
+                  {contractMetadata?.symbol}
                 </div>
               </Paragraph>
 
               <Paragraph>
                 <div>
                   <span className='bold'>totalSupply: </span>
-                  {contractMetadata.totalSupply}
+                  {contractMetadata?.totalSupply}
                 </div>
               </Paragraph>
 
@@ -138,7 +138,7 @@ export const AssetsDetail = () => {
                 <div>
                   <span className='bold'>Description: </span>
                   <div className='fs14'>
-                    {collectionInfo.contractMetadata.openSea.description}
+                    {collectionInfo?.contractMetadata?.openSea?.description}
                   </div>
                 </div>
               </Paragraph>
