@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getContractMetadataSingle, getNFTDetaildData } from '../../api';
 import { BackButton } from '../../Components/BackButton';
-import { convertIpfs2Http, truncateAddress } from '../../utils';
+import { convertIpfs2Http, logoUrl, truncateAddress } from '../../utils';
 import { AttributeCard } from './AttributeCard';
 import './index.scss';
 import { RankType } from '../../types';
+import { marked } from 'marked';
 
 const { Text, Title, Paragraph } = Typography;
 
@@ -81,13 +82,20 @@ export const AssetsDetail = () => {
     <div className='assets-detail'>
       <BackButton />
       <Spin spinning={loading} delay={500}>
-        <h1 className='title'>{contractMetadata?.openSea?.collectionName}</h1>
+        <h1 className='title'>
+          {contractMetadata?.openSea?.collectionName}{' '}
+          {collectionInfo?.contractMetadata?.openSea?.safelistRequestStatus ===
+          'verified'
+            ? '✅'
+            : ''}
+        </h1>
         <div className='assets-detail__content'>
           <Space size={32} align='start'>
             <Image
               width={400}
               style={{ borderRadius: 20 }}
               src={convertIpfs2Http(image)}
+              fallback={logoUrl}
             />
 
             <Space direction='vertical'>
@@ -127,19 +135,16 @@ export const AssetsDetail = () => {
               </Paragraph>
 
               <Paragraph>
-                <span className='bold'>认证状态: </span>
-                {collectionInfo?.contractMetadata?.openSea
-                  ?.safelistRequestStatus === 'verified'
-                  ? '✅'
-                  : '❌'}
-              </Paragraph>
-
-              <Paragraph>
                 <div>
                   <span className='bold'>Description: </span>
-                  <div className='fs14'>
-                    {collectionInfo?.contractMetadata?.openSea?.description}
-                  </div>
+                  <div
+                    className='fs16'
+                    dangerouslySetInnerHTML={{
+                      __html: marked.parse(
+                        collectionInfo?.contractMetadata?.openSea?.description
+                      ),
+                    }}
+                  ></div>
                 </div>
               </Paragraph>
 

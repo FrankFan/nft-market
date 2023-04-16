@@ -6,7 +6,7 @@
 }
 
 .attribute {
-  background: rgba(70, 67, 67, 0.6);
+  background: rgba(62, 160, 230, 0.6);
   width: 200px;
   height: 100px;
   margin-bottom: 10px;
@@ -17,16 +17,16 @@
   justify-content: center;
   padding: 12px;
   &:hover {
-    background: rgba(70, 67, 67, 0.5);
+    background: rgba(62, 160, 230, 0.5);
   }
   &_title {
-    color: #e8e7e7;
+    color: #fff;
     font-size: 14px;
     padding-bottom: 10px;
   }
   &_value {
     font-weight: bold;
-    color: #ededed;
+    color: #fff;
     font-size: 18px;
     text-overflow: ellipsis;
     overflow: hidden;
